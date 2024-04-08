@@ -123,25 +123,25 @@ class PGlobals:
 
     @staticmethod
     def from_state(state):
-        pg = PGlobals()
-        pg.background_color = state["background_color"]
-        pg.stroke_color = state["stroke_color"]
-        pg.fill_color = state["fill_color"]
-        pg.width = state["width"]
-        pg.height = state["height"]
-        pg.stroke_width = state["stroke_width"]
-        pg.draw = state["draw"]
-        pg.canvas = state["canvas"]
-        pg.transform_matrix = state["transform_matrix"]
-        pg.rect_mode = state["rect_mode"]
-        pg.ellipse_mode = state["ellipse_mode"]
-        pg.angle_mode = state["angle_mode"]
-        pg.rotation_angle = state["rotation_angle"]
-        pg.color_mode = state["color_mode"]
-        pg.color_max = state["color_max"]
-        pg.scale_x = state["scale_x"]
-        pg.scale_y = state["scale_y"]
-        return pg
+        new_pg = PGlobals()
+        new_pg.background_color = state["background_color"]
+        new_pg.stroke_color = state["stroke_color"]
+        new_pg.fill_color = state["fill_color"]
+        new_pg.width = state["width"]
+        new_pg.height = state["height"]
+        new_pg.stroke_width = state["stroke_width"]
+        new_pg.draw = state["draw"]
+        new_pg.canvas = state["canvas"]
+        new_pg.transform_matrix = state["transform_matrix"]
+        new_pg.rect_mode = state["rect_mode"]
+        new_pg.ellipse_mode = state["ellipse_mode"]
+        new_pg.angle_mode = state["angle_mode"]
+        new_pg.rotation_angle = state["rotation_angle"]
+        new_pg.color_mode = state["color_mode"]
+        new_pg.color_max = state["color_max"]
+        new_pg.scale_x = state["scale_x"]
+        new_pg.scale_y = state["scale_y"]
+        return new_pg
 
     def get_state(self):
         return {
