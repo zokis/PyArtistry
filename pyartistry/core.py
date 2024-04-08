@@ -1,5 +1,5 @@
 import math
-
+from typing import Optional
 from PIL import Image, ImageDraw
 
 DEGREES = "DEGREES"
@@ -83,22 +83,23 @@ class Color:
     def __str__(self):
         return f"Color({self.r}, {self.g}, {self.b}, {self.a})"
 
-    def get_rgba(self) -> tuple | None:
+    def get_rgba(self) -> Optional[tuple]:
         if self.color_mode == RGB:
             return (self.r, self.g, self.b, self.a)
-        elif self.color_mode == HSB:
+        if self.color_mode == HSB:
             return hsb_to_rgb(self.r, self.g, self.b) + (self.a,)
-        elif self.color_mode == HSL:
+        if self.color_mode == HSL:
             return hsl_to_rgb(self.r, self.g, self.b) + (self.a,)
         return None
 
 
-class ColorNone(Color):
+class ColorNone(Color):  # pylint: disable=too-few-public-methods
     def __init__(self):
-        pass
+        super().__init__(r=None, g=None, b=None, a=None, color_mode=RGB, color_max=255)
 
-    def get_rgba(self):
+    def get_rgba(self) -> None:
         return None
+
 
 class PGlobals:
     background_color = Color(245, 225, 135)
@@ -239,9 +240,9 @@ class PGlobals:
                 g * 255 // self.color_max,
                 b * 255 // self.color_max,
             )
-        elif self.color_mode == HSB:
+        if self.color_mode == HSB:
             return hsb_to_rgb(r, g, b)
-        elif self.color_mode == HSL:
+        if self.color_mode == HSL:
             return hsl_to_rgb(r, g, b)
         return ColorNone()
 
@@ -312,13 +313,14 @@ def lerpColor(c1: Color, c2: Color, amt: float) -> Color:
     )
 
 
-def angleMode(mode=None) -> str | None:
+def angleMode(mode=None) -> Optional[str]:
     if mode is None:
         return pg.angle_mode
     if mode in [DEGREES, RADIANS]:
         pg.angle_mode = mode
     else:
         raise ValueError("Invalid angle mode. Use 'DEGREES' or 'RADIANS'.")
+    return None
 
 
 def scale(sx: int, sy=None):
@@ -420,8 +422,11 @@ def quad(x1, y1: int, x2: int, y2: int, x3: int, y3: int, x4: int, y4: int):
         width=pg.stroke_width,
     )
 
+
 def line(x1: int, y1: int, x2: int, y2: int):
-    pg.draw.line((x1, y1, x2, y2), fill=pg.stroke_color.get_rgba(), width=pg.stroke_width)
+    pg.draw.line(
+        (x1, y1, x2, y2), fill=pg.stroke_color.get_rgba(), width=pg.stroke_width
+    )
 
 
 def circle(x: int, y: int, r: int):
