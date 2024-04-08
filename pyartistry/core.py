@@ -83,13 +83,14 @@ class Color:
     def __str__(self):
         return f"Color({self.r}, {self.g}, {self.b}, {self.a})"
 
-    def get_rgba(self):
+    def get_rgba(self) -> tuple | None:
         if self.color_mode == RGB:
             return (self.r, self.g, self.b, self.a)
         elif self.color_mode == HSB:
             return hsb_to_rgb(self.r, self.g, self.b) + (self.a,)
         elif self.color_mode == HSL:
             return hsl_to_rgb(self.r, self.g, self.b) + (self.a,)
+        return None
 
 
 class ColorNone(Color):
@@ -242,6 +243,7 @@ class PGlobals:
             return hsb_to_rgb(r, g, b)
         elif self.color_mode == HSL:
             return hsl_to_rgb(r, g, b)
+        return ColorNone()
 
 
 pg = PGlobals()
@@ -310,7 +312,7 @@ def lerpColor(c1: Color, c2: Color, amt: float) -> Color:
     )
 
 
-def angleMode(mode=None):
+def angleMode(mode=None) -> str | None:
     if mode is None:
         return pg.angle_mode
     if mode in [DEGREES, RADIANS]:
