@@ -220,6 +220,10 @@ This will create a canvas with a red rectangle and a blue circle.
 -   `RGB`: Constant for setting color mode to RGB.
 -   `HSB`: Constant for setting color mode to HSB (Hue, Saturation, Brightness).
 -   `HSL`: Constant for setting color mode to HSL (Hue, Saturation, Lightness).
+-   `CORNER`: Constant for setting rectMode and ellipseMode
+-   `CORNERS`: Constant for setting rectMode and ellipseMode
+-   `CENTER`: Constant for setting rectMode and ellipseMode
+-   `RADIUS`: Constant for setting rectMode and ellipseMode
 
 ## Noise Module
 
