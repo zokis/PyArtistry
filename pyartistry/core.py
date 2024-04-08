@@ -92,6 +92,13 @@ class Color:
             return hsl_to_rgb(self.r, self.g, self.b) + (self.a,)
 
 
+class ColorNone(Color):
+    def __init__(self):
+        pass
+
+    def get_rgba(self):
+        return None
+
 class PGlobals:
     background_color = Color(245, 225, 135)
     stroke_color = Color(100, 215, 225)
@@ -351,7 +358,7 @@ def fill(r, g=None, b=None):
 
 
 def noFill():
-    pg.fill_color = None
+    pg.fill_color = ColorNone()
 
 
 def stroke(r, g=None, b=None):
@@ -411,6 +418,9 @@ def quad(x1, y1: int, x2: int, y2: int, x3: int, y3: int, x4: int, y4: int):
         width=pg.stroke_width,
     )
 
+def line(x1: int, y1: int, x2: int, y2: int):
+    pg.draw.line((x1, y1, x2, y2), fill=pg.stroke_color.get_rgba(), width=pg.stroke_width)
+
 
 def circle(x: int, y: int, r: int):
     ellipse(x, y, r, r)
@@ -418,7 +428,7 @@ def circle(x: int, y: int, r: int):
 
 def ellipse(x: int, y: int, w: int, h: int):
     if pg.ellipse_mode == CENTER:
-        bbox = [x - w / 2, y - h / 2, x + w / 2, y + h / 2]
+        bbox = [x - w // 2, y - h // 2, x + w // 2, y + h // 2]
     elif pg.ellipse_mode == RADIUS:
         bbox = [x - w, y - h, x + w, y + h]
     elif pg.ellipse_mode == CORNER:
@@ -467,8 +477,11 @@ def endShape(close: bool = False):
     pg.shape_vertices = []
 
 
-def background(r, g, b):
-    pg.draw.rectangle([0, 0, pg.width, pg.height], fill=pg.convert_color(r, g, b))
+def background(r, g=None, b=None):
+    if isinstance(r, Color):
+        pg.draw.rectangle([0, 0, pg.width, pg.height], fill=r.get_rgba())
+    else:
+        pg.draw.rectangle([0, 0, pg.width, pg.height], fill=pg.convert_color(r, g, b))
 
 
 def sin(angle: float) -> float:
@@ -512,8 +525,8 @@ def dist(x1: int, y1: int, x2: int, y2: int) -> int:
 def saveGif(
     draw_func,
     filename: str,
-    size: tuple[int, int] = (400, 400),
-    max_frames: int = 8,
+    size: tuple = (400, 400),
+    max_frames: int = 100,
     frame_rate: int = 60,
 ):
     global pg
