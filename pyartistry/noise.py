@@ -40,7 +40,7 @@ def noise(x, y=0, z=0):
     r = 0
     ampl = 0.5
 
-    for o in range(perlin_octaves):
+    for _ in range(perlin_octaves):
         of = xi + (yi << PERLIN_YWRAPB) + (zi << PERLIN_ZWRAPB)
 
         rxf = scaled_cosine(xf)
