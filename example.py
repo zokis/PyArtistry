@@ -1,4 +1,27 @@
-from pyartistry import *
+from pyartistry import (
+    background,
+    beginShape,
+    CENTER,
+    circle,
+    color,
+    createCanvas,
+    dist,
+    ellipseMode,
+    endShape,
+    lerpColor,
+    line,
+    noFill,
+    noise,
+    noiseSeed,
+    point,
+    rect,
+    save,
+    show,
+    stroke,
+    strokeWeight,
+    triangle,
+    vertex,
+)
 
 noiseSeed(55)
 
@@ -28,8 +51,8 @@ circle(CENTER_X, CENTER_Y, RADIUS * 2)
 circle(CENTER_X / 2, CENTER_Y / 2, RADIUS)
 circle(400 - CENTER_X / 4, 400 - CENTER_Y / 4, RADIUS / 2)
 
-for x in range(pg.width):
-    for y in range(pg.height):
+for x in range(400):
+    for y in range(400):
         n1 = noise(x * 0.02, y * 0.01)
         n2 = noise(x * 0.01, y * 0.02)
         if dist(x, y, CENTER_X, CENTER_Y) <= RADIUS - 4:
@@ -44,7 +67,6 @@ for x in range(pg.width):
             stroke(lerpColor(lerpColor(c2, c3, n2), c5, n2))
             point(x, y)
 
-push()
 noFill()
 stroke(0, 0, 0)
 triangle(200, 30, 180, 70, 220, 70)
@@ -62,9 +84,6 @@ line(210, 115, 210, 350)
 line(170, 115, 170, 350)
 
 rect(170, 350, 60, 20, 5)
-
-pop()
-
 show()
 
 save("logo.png")
